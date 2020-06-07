@@ -1,10 +1,9 @@
-import React, { useRef, SyntheticEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AutoComplete,
   Input,
   Card,
   List,
-  Avatar,
   Typography,
   Select,
   Space,
@@ -13,20 +12,17 @@ import {
 } from "antd";
 import "./App.css";
 import "antd/dist/antd.css";
-import { promises } from "dns";
-import { isArray } from "util";
 
 const { Title } = Typography;
 const { Option } = Select;
 const App: React.FC = () => {
-  let x: string;
-  let y: string;
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [search, setSearch] = useState("");
   const [options, setOptions] = useState([]);
   const [radius, setRadius] = useState(1000);
   const [lat, setLat] = useState(2);
   const [lng, setLng] = useState(2);
+
   const [hospital, setHospital] = useState<
     {
       name: string;
@@ -126,6 +122,7 @@ const App: React.FC = () => {
 
   return (
     <div className="container">
+      <div className="empty"></div>
       <p
         className="name"
         style={{
@@ -135,8 +132,14 @@ const App: React.FC = () => {
           marginBottom: 35,
           fontSize: 50,
           fontWeight: "bolder",
+          color: "rgb(102, 0, 153)",
         }}
       >
+        <img
+          style={{ width: 100, marginRight: 7 }}
+          src={require("./pic/plus.svg")}
+          alt=""
+        />
         HOSPITAL NEARBY
       </p>
       {!gps ? (
@@ -184,7 +187,13 @@ const App: React.FC = () => {
       </AutoComplete>
       <Select
         placeholder="Select Search Radius"
-        style={{ width: 200, marginLeft: "auto", marginBottom: "20" }}
+        style={{
+          width: 200,
+          marginLeft: "auto",
+          marginBottom: "20",
+          alignSelf: "center",
+          transform: "translateX(-50px)",
+        }}
         onChange={handleChange}
       >
         <Option value={1000}>1KM</Option>
@@ -222,7 +231,7 @@ const App: React.FC = () => {
                 }
                 bordered={false}
                 style={{
-                  width: "90%",
+                  width: "95%",
                   marginLeft: "auto",
                   marginRight: "auto",
                   maxWidth: 800,
@@ -233,7 +242,6 @@ const App: React.FC = () => {
                 <p>
                   Distance: <span className="bold">{parseInt(item.dist)}M</span>
                 </p>
-
                 <p>
                   Address: <span className="bold">{item.address}</span>{" "}
                 </p>
