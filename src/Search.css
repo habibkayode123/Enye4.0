@@ -1,0 +1,17 @@
+body {
+  width: 100%;
+  background: #ececec;
+}
+.search-container {
+}
+
+.upperbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  height: 130px;
+  background-color: #f6f3ec;
+  padding: 20px;
+  margin-bottom: 2px solid black;
+  position: relative;
+}
