@@ -2,28 +2,31 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
+import * as serviceWorker from "./serviceWorker";
 import Search from "./search";
 import History from "./history";
-import * as serviceWorker from "./serviceWorker";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-} from "react-router-dom";
+import Home from "./home";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "@apollo/react-hooks";
+
+const client = new ApolloClient({
+  uri: "https://us-central1-habib-ce35e.cloudfunctions.net/graph/graphql",
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <Switch>
-        <Route exact path="/search/:text" component={Search}></Route>
-        <Route exact path="/history" component={History} />
-        <Route path="/">
-          <App />
-        </Route>
-      </Switch>
-    </Router>
+    <ApolloProvider client={client}>
+      <Router>
+        <Switch>
+          <Route exact path="/search/:text" component={Search}></Route>
+          <Route exact path="/history" component={History} />
+          <Route path="/home" component={Home}></Route>
+          <Route path="/" component={App} />
+        </Switch>
+      </Router>
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
