@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import { Form, Input, Button, Modal } from "antd";
-import firebase from "./firebase";
+import firebase from "../helper/firebase";
 
-import "./app.css";
+import "../styles/app.css";
 
 const uiConfig = {
   // Popup signin flow rather than redirect flow.
@@ -32,30 +32,26 @@ const App: React.FC = () => {
   const [visible, setVisible] = useState(false);
 
   const onFinish = (values: any) => {
-    console.log("Success:", values);
+    //create new User
     firebase
       .auth()
       .createUserWithEmailAndPassword(values.email, values.password)
-      .then((saved) => {
-        console.log("created", saved);
-      });
+      .then((saved) => {});
   };
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
-
+  //displapy modal
   const showModal = () => {
     setVisible(true);
   };
-
+  //hide modal
   const handleOk = (e: any) => {
-    console.log(e);
     setVisible(false);
   };
 
   const handleCancel = (e: any) => {
-    console.log(e);
     setVisible(false);
   };
 
@@ -64,7 +60,7 @@ const App: React.FC = () => {
       if (user) {
         //@ts-ignore
         localStorage.setItem("id", firebase.auth().currentUser.uid);
-        console.log(user);
+
         setSingIn(true);
       } else {
         // No user is signed in.
@@ -80,7 +76,7 @@ const App: React.FC = () => {
         <div style={{ width: "100%", height: "100vh", display: "flex" }}>
           <img
             style={{ width: "50%", height: "100%", display: "grid" }}
-            src={require("./pic/doc.jpg")}
+            src={require("../pic/doc.jpg")}
             alt=""
           />
           <div
@@ -102,7 +98,7 @@ const App: React.FC = () => {
             >
               <img
                 style={{ width: 100, marginRight: 7 }}
-                src={require("./pic/plus.svg")}
+                src={require("../pic/plus.svg")}
                 alt=""
               />
               HOSPITAL NEARBY

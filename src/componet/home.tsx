@@ -14,9 +14,9 @@ import { useMutation } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 
 import { Link, Redirect } from "react-router-dom";
-import "./home.css";
+import "../styles/home.css";
 import "antd/dist/antd.css";
-import firebase from "./firebase";
+import firebase from "../helper/firebase";
 
 const db = firebase.firestore();
 const { Title } = Typography;
@@ -29,6 +29,9 @@ const Add_Search = gql`
     }
   }
 `;
+interface EachSearch {
+  value: string;
+}
 
 const Home: React.FC = () => {
   const [addSearch, { data }] = useMutation(Add_Search);
@@ -67,7 +70,7 @@ const Home: React.FC = () => {
             let name = result.poi.name;
             let address = result.address.freeformAddress;
 
-            let obj: any = { value: `${name} at ${address}` };
+            let obj: EachSearch = { value: `${name} at ${address}` };
             results.push(obj);
           });
         }
@@ -181,7 +184,7 @@ const Home: React.FC = () => {
         >
           <img
             style={{ width: 100, marginRight: 7 }}
-            src={require("./pic/plus.svg")}
+            src={require("../pic/plus.svg")}
             alt=""
           />
           HOSPITAL NEARBY

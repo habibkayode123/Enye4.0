@@ -3,10 +3,9 @@ import { Link, Redirect } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 
-import firebase from "./firebase";
+import firebase from "../helper/firebase";
 import { List, Spin, Space } from "antd";
-import "./history.css";
-const db = firebase.firestore();
+import "../styles/history.css";
 
 const GET_History = gql`
   query($id: String) {
@@ -28,16 +27,16 @@ const History: React.FC = (props) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [singIn, setSignIn] = useState(true);
-  let docRef = db.collection("Search");
 
   useEffect(() => {
-    console.log(histData, histLoad, props, "props is here");
+    //check to see if Query is loading
     if (!histLoad) {
       setData(histData.search);
+      console.log(histData.search);
       setLoading(false);
     }
 
-    let user: any = firebase.auth().currentUser;
+    let user = firebase.auth().currentUser;
     if (user) {
     } else {
       setSignIn(false);
@@ -60,7 +59,7 @@ const History: React.FC = (props) => {
               style={{
                 width: 70,
               }}
-              src={require("./pic/plus.svg")}
+              src={require("../pic/plus.svg")}
               alt=""
             />
             NearBy
@@ -96,7 +95,7 @@ const History: React.FC = (props) => {
             dataSource={data}
             renderItem={(item: any) => (
               <List.Item>
-                <Link to={`/search/${item}`}>
+                <Link to={`/search/${item.search}`}>
                   <p
                     style={{
                       fontSize: 25,

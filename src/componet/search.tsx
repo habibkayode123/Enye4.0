@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Search.css";
+import "../styles/search.css";
 import {
   AutoComplete,
   Input,
@@ -11,7 +11,7 @@ import {
   Card,
 } from "antd";
 import { Link, Redirect } from "react-router-dom";
-import firebase from "./firebase";
+import firebase from "../helper/firebase";
 import "firebase/auth";
 import { useMutation } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
@@ -106,9 +106,7 @@ const Search: React.FC = (props: any) => {
   }, [search, radius]);
 
   useEffect(() => {
-    console.log("idiididid");
-    const userRef = db
-      .collection("Search")
+    db.collection("Search")
       .add({
         search: search,
       })
@@ -134,15 +132,12 @@ const Search: React.FC = (props: any) => {
             results.push(obj);
           });
         }
-
         setOptions(results);
-        console.log("change");
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
   if (singIn) {
     return (
       <div className="search-container">
@@ -159,7 +154,7 @@ const Search: React.FC = (props: any) => {
                 style={{
                   width: 100,
                 }}
-                src={require("./pic/plus.svg")}
+                src={require("../pic/plus.svg")}
                 alt=""
               />
               NearBy
